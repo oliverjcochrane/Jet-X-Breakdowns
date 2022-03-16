@@ -60,7 +60,7 @@ data1 <- rbind(cd, em, bb, kc, jc) %>%
 #Remove the duplicate rows
 plot1 <- data1[-c(2:59, 61:136, 138:201, 203:252, 254:323),]
 
-# First plot - Air Yards vs CPOE
+# First plot - Average Air Yards vs CPOE
 ggplot(plot1, aes(avg_air_yards, avg_cpoe, label = receiver))+
   geom_point(size = 0.5) +
   geom_label_repel(size = 4) +
