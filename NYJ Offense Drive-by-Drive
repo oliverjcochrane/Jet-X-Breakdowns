@@ -1,10 +1,7 @@
-library(dplyr)
 library(tidyverse)
 library(nflverse)
-library(stringr)
 library(ggplot2)
 library(ggrepel)
-library(ggpubr)
 library(lubridate)
 
 #Load data, create a new column with drive time in seconds (instead of mm:ss).
