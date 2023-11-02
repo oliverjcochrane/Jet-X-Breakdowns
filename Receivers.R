@@ -1,7 +1,6 @@
 #WR Breakdown!
 library(tidyverse)
 library(nflverse)
-library(ggplot2)
 library(ggimage)
 library(ggrepel)
 library(ggthemes)
@@ -16,58 +15,58 @@ wrs <- load_pbp(2022) %>%
 #Filter out the Jets' receivers in a separate data frame
 jetwrs <- wrs %>%
   filter(posteam == "NYJ", receiver_player_name %in% 
-           c("G.Wilson", "C.Davis", "E.Moore", "D.Mims", "B.Berrios")) %>% 
+           c("G.Wilson", "A.Lazard", "R.Cobb", "X.Gipson", "T.Conklin")) %>% 
   summarize(avg_air_yards = mean(jetwrs$air_yards),
             avg_cpoe = mean(jetwrs$cpoe))
 
 #Store individual receiver sets to find averages
-gw <- jetwrs %>%
+wilson <- jetwrs %>%
   filter(receiver == "G.Wilson")
-gw <- gw %>%
+wilson <- wilson %>%
   mutate(
-    avg_air_yards = mean(gw$air_yards),
-    avg_cpoe = mean(gw$cpoe)
+    avg_air_yards = mean(wilson$air_yards),
+    avg_cpoe = mean(wilson$cpoe)
   ) %>%
   as_tibble()
 
-cd <- jetwrs %>%
-  filter(receiver == "C.Davis")
-cd <- cd %>%
+lazard <- jetwrs %>%
+  filter(receiver == "A.Lazard")
+lazard <- lazard %>%
   mutate(
-    avg_air_yards = mean(cd$air_yards),
-    avg_cpoe = mean(cd$cpoe)
+    avg_air_yards = mean(lazard$air_yards),
+    avg_cpoe = mean(lazard$cpoe)
   ) %>%
   as_tibble()
 
-em <- jetwrs %>%
-  filter(receiver == "E.Moore")
-em <- em %>%
+uzomah <- jetwrs %>%
+  filter(receiver == "C.Uzomah")
+uzomah <- uzomah %>%
   mutate(
-    avg_air_yards = mean(em$air_yards),
-    avg_cpoe = mean(em$cpoe)
+    avg_air_yards = mean(uzomah$air_yards),
+    avg_cpoe = mean(uzomah$cpoe)
   ) %>%
   as_tibble()
 
-dm <- jetwrs %>%
-  filter(receiver == "D.Mims")
-dm <- dm %>%
+ruckert <- jetwrs %>%
+  filter(receiver == "J.Ruckert")
+ruckert <- ruckert %>%
   mutate(
-    avg_air_yards = mean(dm$air_yards),
-    avg_cpoe = mean(dm$cpoe)
+    avg_air_yards = mean(ruckert$air_yards),
+    avg_cpoe = mean(ruckert$cpoe)
   ) %>%
   as_tibble()
 
-bb <- jetwrs %>%
-  filter(receiver == "B.Berrios")
-bb <- bb %>%
+conklin <- jetwrs %>%
+  filter(receiver == "T.Conklin")
+conklin <- conklin %>%
   mutate(
-    avg_air_yards = mean(bb$air_yards),
-    avg_cpoe = mean(bb$cpoe)
+    avg_air_yards = mean(conklin$air_yards),
+    avg_cpoe = mean(conklin$cpoe)
   ) %>%
   as_tibble()
 
 #Now combine rows into a single data frame
-data1 <- rbind(gw, cd, em, dm, bb) %>%
+data1 <- rbind(wilson, lazard, uzomah, ruckert, conklin) %>%
   select(receiver, avg_air_yards, avg_cpoe) %>%
   distinct()
 
@@ -77,7 +76,7 @@ ggplot(data1, aes(avg_air_yards, avg_cpoe, label = receiver))+
   geom_label_repel(size = 4) +
   geom_hline(yintercept = mean(wrs$cpoe), color = "darkblue", linetype = 2) +
   geom_vline(xintercept = mean(wrs$air_yards), color = "darkblue", linetype = 2) +
-  labs(title = "Air Yards vs CPOE of Jets' WRs (2022)",
+  labs(title = "Air Yards vs CPOE of Jets' WRs (2023)",
        subtitle = "Jets' Top-5 Receivers by Receiving Yards",
        caption = "Built by Oliver Cochrane (@OliverJCochrane) | Data via @NFLfastR",
        x = "Average Air Yards",
